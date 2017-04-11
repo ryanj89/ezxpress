@@ -16,7 +16,7 @@ $ npm install -g ezxpress
 Create the app:
 
 ```sh
-$ ezx --git --gulp /tmp/foo
+$ ezx --git --gulp --css sass /tmp/foo
 ```
 
 Install dependencies:

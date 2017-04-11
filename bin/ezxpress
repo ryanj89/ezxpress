@@ -33,6 +33,10 @@ process.exit = exit;
 //   }
 // })
 
+// ********************* //
+//    Program Options    //
+// ********************* //
+
 program
   .version(version, '--version')
   .usage('[options] [dir]')
@@ -64,14 +68,19 @@ function generateApplication(projectName, path) {
   var app = getTemplate('js/app.js');
   var www = getTemplate('js/www');
   var users = getTemplate('js/routes/users.js');
+
+  // Get Angular files
   var appModule = getTemplate('js/app.module.js');
   var appConfig = getTemplate('js/app.config.js');
   var exampleComponent = getTemplate('js/example.component.js');
+
+  // Get Gulp files
   var gulpFile = getTemplate('js/gulpfile.js');
+  var gulpFileSass = getTemplate('js/gulpfile-sass.js');
 
   // Get CSS files
   var css = getTemplate('css/style.css');
-  var sass = getTemplate('css/style.sass');
+  var sass = getTemplate('css/style.scss');
 
   // Create public directories
   mkdir(path, function() {
@@ -98,7 +107,7 @@ function generateApplication(projectName, path) {
     mkdir(path + '/app/public/css', function() {
       switch (program.css) {
         case 'sass':
-          writeToFile(path + '/app/public/css/style.sass', sass);
+          writeToFile(path + '/app/public/css/style.scss', sass);
           break;
         default:
           writeToFile(path + '/app/public/css/style.css', css);
@@ -111,14 +120,13 @@ function generateApplication(projectName, path) {
       writeToFile(path + '/app/routes/users.js', users);
       complete();
     });
-
     
     // Create package.json for project
     var pkg = {
       name: projectName,
       version: '0.0.0',
       scripts: {
-        start: './bin/www'
+        start: './app/bin/www'
       },
       dependencies: {
         'angular': '^1.6.0',
@@ -145,7 +153,15 @@ function generateApplication(projectName, path) {
     // Create gulpfile.js
     if (program.gulp) {
       pkg.scripts.start = 'gulp';
-      writeToFile(path + '/gulpfile.js', gulpFile);
+      switch (program.css) {
+        case 'sass':
+          pkg.devDependencies['gulp-sass'] = '^3.1.0';
+          writeToFile(path + '/gulpfile.js', gulpFileSass);
+          break;
+        default:
+          writeToFile(path + '/gulpfile.js', gulpFile);
+          break;
+      }
     }
 
     // write files
