@@ -1,0 +1,21 @@
+{
+  "author": {
+    "name": "Ryan Johnson",
+    "email": "ryanj89@gmail.com"
+  },
+  "bin": {
+    "ezx": "./bin/ezxpress"
+  },
+  "dependencies": {
+    "commander": "^2.9.0",
+    "mkdirp": "^0.5.1"
+  },
+  "description": "Simple express app generator with AngularJS front-end framework",
+  "license": "ISC",
+  "main": "bin/ezxpress",
+  "name": "ezxpress",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.2"
+}
