@@ -54,7 +54,7 @@ if (!exit.exited) {
 // ********************* //
 
 function generateApplication(projectName, path) {
-  var wait = 8;
+  var wait = 10;
   console.log();
   console.log('   \033[0;35mGenerating %s\033[0m', `"${projectName}"`);
   console.log();
@@ -82,12 +82,32 @@ function generateApplication(projectName, path) {
   var css = getTemplate('css/style.css');
   var sass = getTemplate('css/style.scss');
 
+  // Get Knex/db files
+  var knexFile = getTemplate('js/knex/knexfile.js');
+  var dbFile = getTemplate('js/knex/db.js');
+  var migration = getTemplate('js/knex/create_users.js');
+  var seed = getTemplate('js/knex/01-users.js');
+
+  // Get script files
+  var setupDb = getTemplate('scripts/setupdb.sh');
+
   // Create public directories
   mkdir(path, function() {
+    writeToFile(path + '/setupdb.sh', setupDb);
     mkdir(path + '/app', function() {
       writeToFile(path + '/app/app.js', app);
+      writeToFile(path + '/app/knexfile.js', knexFile);
+      writeToFile(path + '/app/db.js', dbFile);
       complete();
     });
+    mkdir(path + '/app/migrations/', function() {
+      writeToFile(path + '/app/migrations/create_users.js', migration);
+      complete();
+    })
+    mkdir(path + '/app/seeds/', function() {
+      writeToFile(path + '/app/seeds/01-users.js', seed);
+      complete();
+    })
     mkdir(path + '/app/public', function() {
       writeToFile(path + '/app/public/index.html', index);
       complete();
@@ -126,6 +146,7 @@ function generateApplication(projectName, path) {
       name: projectName,
       version: '0.0.0',
       scripts: {
+        postinstall: "sh ./setupdb.sh",
         start: './app/bin/www'
       },
       dependencies: {
@@ -135,7 +156,9 @@ function generateApplication(projectName, path) {
         'body-parser': '~1.16.0',
         'debug': '~2.6.0',
         'morgan': '~1.7.0',
-        'serve-favicon': '~2.3.2'
+        'serve-favicon': '~2.3.2',
+        "knex": "^0.12.6",
+        "pg": "^6.1.2"
       },
       devDependencies: {
         'browser-sync': '^2.18.5',

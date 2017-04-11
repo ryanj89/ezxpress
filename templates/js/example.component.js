@@ -8,11 +8,14 @@
       controller: controller
     });
 
-    function controller() {
+    controller.$inject = ['$http'];
+    function controller($http) {
       const vm = this;
 
       vm.$onInit = function() {
-
+        $http.get('/api/users').then(res => {
+          vm.users = res.data;
+        })
       }
     }
 })();
