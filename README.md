@@ -31,6 +31,32 @@ Start your Express.js app at `http://localhost:5000/`:
 $ npm start
 ```
 
+## Sample Directory Structure
+```
+foo/
+├── app/
+│   ├── app.js
+│   ├── gulpfile.js
+│   ├── .gitignore
+│   ├── package.json
+│   ├── bin/
+│   │   ├── www
+│   ├── public/
+│   │   ├── index.html
+│   │   ├── assets/
+│   │   ├── css/
+│   │   │   ├── style.css
+│   │   ├── js/
+│   │   │   ├── app/
+│   │   │   │   ├── app.config.js
+│   │   │   │   ├── app.module.js
+│   │   │   ├── component/
+│   │   │   │   ├── example.component.js
+│   │   │   │   ├── example.template.html
+│   ├── routes/
+│   │   ├── users.js
+```
+
 ## Command Line Options
 
 This generator can also be further configured with the following command line flags.
