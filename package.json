@@ -11,9 +11,14 @@
     "mkdirp": "^0.5.1"
   },
   "description": "Simple express app generator with AngularJS front-end framework",
+  "homepage": "https://github.com/ryanj89/ezxpress#readme",
   "license": "ISC",
   "main": "bin/ezxpress",
   "name": "ezxpress",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanj89/ezxpress.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
